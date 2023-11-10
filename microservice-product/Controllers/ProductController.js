@@ -17,7 +17,7 @@ router.get("/products", async (req, res) => {
 router.get("/products/:productId", async (req, res) => {
     try {
         const productId = req.params.productId;
-        const product = await Product.findOne({ productId: productId }).exec();
+        const product = await Product.findById(productId).exec();
         if (!product) {
             return res.status(404).json({ message: "Produit non trouvé" });
         }
