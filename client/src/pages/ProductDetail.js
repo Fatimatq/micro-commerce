@@ -44,11 +44,15 @@ const ProductDetail = () => {
       ) : (
         <>
           {product ? (
-            <div className="flex flex-col items-center">
-              <h3 className="text-2xl font-bold mb-4">{product.title}</h3>
-              <p className="text-gray-600 mb-4">{product.description}</p>
-              <img className="w-full max-w-lg rounded-md mb-4" src={product.image} alt={product.title} />
-              <p className="text-blue-500 text-lg font-bold">Prix: {product.price} €</p>
+            <div className="max-w-2xl mx-auto bg-white p-6 rounded-md shadow-md">
+              <h3 className="text-2xl font-bold mb-4">{product.titre}</h3>
+              <div className="flex items-center">
+                <img className="w-1/2 h-48 object-cover rounded-md mb-4" src={product.image} alt={product.title} />
+                <div className="ml-4">
+                  <p className="text-gray-600">{product.description}</p>
+                  <p className="text-blue-500 text-lg font-bold mt-4">Prix: {product.price} €</p>
+                </div>
+              </div>
             </div>
           ) : (
             <p className="text-gray-600">Chargement...</p>

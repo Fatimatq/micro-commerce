@@ -1,33 +1,38 @@
 [
-    {
-      "titre": "Produit 1",
-      "description": "Description du produit 1",
-      "image": "image1.jpg",
-      "price": 29.99
-    },
-    {
-      "titre": "Produit 2",
-      "description": "Description du produit 2",
-      "image": "image2.jpg",
-      "price": 39.99
-    },
-    {
-      "titre": "Produit 3",
-      "description": "Description du produit 3",
-      "image": "image3.jpg",
-      "price": 19.99
-    },
-    {
-      "titre": "Produit 4",
-      "description": "Description du produit 4",
-      "image": "image4.jpg",
-      "price": 49.99
-    },
-    {
-      "titre": "Produit 5",
-      "description": "Description du produit 5",
-      "image": "image5.jpg",
-      "price": 59.99
-    }
-  ]
-  
+  {
+    "titre": "SAMSUNG A23",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://www.maisonelectro.ma/wp-content/uploads/2023/03/SM-A235FZWKMWD1.png",
+    "price": 29.99
+  },
+  {
+    "titre": "IPHONE 13",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://micromagma.ma/media/k2/items/cache/016d52a548fcdc1d46bf5e58e58ba45d_XL.jpg",
+    "price": 39.99
+  },
+  {
+    "titre": "SAMSUNG S22 Ultra",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/n_africa/2202/gallery/n-africa-galaxy-s22-ultra-s908-413076-sm-s908edrgmwd-thumb-530972151",
+    "price": 19.99
+  },
+  {
+    "titre": "OPPO RENO 8",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://micromagma.ma/media/k2/items/cache/bfb358425def969ff8eb825fe440b79c_XL.jpg",
+    "price": 49.99
+  },
+  {
+    "titre": "REDMI NOTE 12",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://i0.wp.com/telefonat.ma/wp-content/uploads/2023/07/IMG_5070.jpeg?fit=1600%2C1600&ssl=1",
+    "price": 59.99
+  },
+  {
+    "titre": "SAMSUNG A24",
+    "description": "Lorem ipsum dolor amet offal butcher quinoa sustainable gastropub, echo park actually green juice sriracha paleo. Brooklyn sriracha semiotics, DIY coloring book mixtape craft beer sartorial hella blue bottle. Tote bag wolf authentic try-hard put a bird on it mumblecore. Unicorn lumbersexual master cleanse blog hella VHS, vaporware sartorial church-key cardigan single-origin coffee lo-fi organic asymmetrical. Taxidermy semiotics celiac stumptown scenester normcore, ethical helvetica photo booth gentrify.",
+    "image": "https://gsmdistribution.ma/hugnofol/samsung-galaxy-a24-noir-argent-gsm-distribution-maroc-1-2.jpg",
+    "price": 59.99
+  }
+]
