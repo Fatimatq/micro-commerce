@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . . 
 
-EXPOSE 8080 
+EXPOSE 5001 
 
 CMD ["node", "./Config/db.js"]
