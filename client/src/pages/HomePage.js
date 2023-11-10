@@ -1,15 +1,18 @@
-import React from 'react'
-import ProductList from '../components/ProductList'
+import React from 'react';
+import ProductList from '../components/ProductList';
 
+const HomePage = () => {
+  return (
+    <>
+      <div className="bg-teal-400 text-gray-800 text-center py-10">
+        <h1 className="text-4xl font-bold">Bienvenue sur MCommerce</h1>
+      </div>
 
-const HomePage =() => {
-    return (
-        <>
-        <div className="flex justify-center items-center w-full my-12">
-            <h1 className="text-3xl font-bold">Application Mcommerce</h1>
-        </div>
-        <ProductList></ProductList>
-        </>
-    )
+      <div className="container mx-auto my-8">
+        <ProductList />
+      </div>
+    </>
+  );
 };
+
 export default HomePage;

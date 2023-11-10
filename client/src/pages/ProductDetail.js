@@ -8,23 +8,12 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Product ID:', productId);
-
     const fetchProduct = async () => {
       try {
         const productData = await ProductService.getProduct(productId);
-        console.log('Product Data:', productData);
         setProduct(productData);
       } catch (error) {
-        console.error('Erreur lors de la récupération du produit :', error);
-
-        if (error.response && error.response.status === 404) {
-          setError('Produit non trouvé. Veuillez vérifier l\'ID du produit.');
-        } else if (error.message === 'Network Error') {
-          setError('Erreur réseau. Veuillez vérifier votre connexion Internet.');
-        } else {
-          setError('Une erreur s\'est produite lors de la récupération du produit.');
-        }
+        handleFetchError(error);
       }
     };
 
@@ -33,22 +22,36 @@ const ProductDetail = () => {
     }
   }, [productId]);
 
+  const handleFetchError = (error) => {
+    console.error('Erreur lors de la récupération du produit :', error);
+
+    if (error.response && error.response.status === 404) {
+      setError('Produit non trouvé. Veuillez vérifier l\'ID du produit.');
+    } else if (error.isAxiosError && error.response.status === 500) {
+      setError('Erreur serveur. Veuillez réessayer plus tard.');
+    } else if (error.message === 'Network Error') {
+      setError('Erreur réseau. Veuillez vérifier votre connexion Internet.');
+    } else {
+      setError('Une erreur s\'est produite lors de la récupération du produit.');
+    }
+  };
+
   return (
-    <div>
-      <h2>Détails du produit</h2>
+    <div className="container mx-auto my-8">
+      <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">Détails du produit</h2>
       {error ? (
-        <p style={{ color: 'red' }}>{error}</p>
+        <p className="text-red-500">{error}</p>
       ) : (
         <>
           {product ? (
-            <div>
-              <h3>{product.titre}</h3>
-              <p>{product.description}</p>
-              <img src={product.image} alt={product.titre} />
-              <p>Prix: {product.price} €</p>
+            <div className="flex flex-col items-center">
+              <h3 className="text-2xl font-bold mb-4">{product.title}</h3>
+              <p className="text-gray-600 mb-4">{product.description}</p>
+              <img className="w-full max-w-lg rounded-md mb-4" src={product.image} alt={product.title} />
+              <p className="text-blue-500 text-lg font-bold">Prix: {product.price} €</p>
             </div>
           ) : (
-            <p>Chargement...</p>
+            <p className="text-gray-600">Chargement...</p>
           )}
         </>
       )}
