@@ -36,6 +36,28 @@ router.get("/orders/:id", async (req, res) => {
     }
 });
 
+router.put("/orders/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const { productId, orderDate, quantity, orderPay } = req.body;
+
+        const updatedOrder = await Order.findByIdAndUpdate(
+            orderId,
+            { productId, orderDate, quantity, orderPay },
+            { new: true } // Pour renvoyer la version mise à jour de l'objet
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: "Commande non trouvée" });
+        }
+
+        console.log("Commande mise à jour avec succès");
+        res.json(updatedOrder);
+    } catch (err) {
+        console.error("Erreur lors de la mise à jour de la commande :", err);
+        res.status(500).send("Erreur lors de la mise à jour de la commande.");
+    }
+});
 
 
 module.exports = router;
