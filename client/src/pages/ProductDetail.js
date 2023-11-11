@@ -8,13 +8,17 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Product ID:', productId);
 
     const fetchProduct = async () => {
       try {
         const productData = await ProductService.getProduct(productId);
         console.log('Product Data:', productData);
-        setProduct(productData);
+
+        if (!productData) {
+          setError('Produit non trouvé. Veuillez vérifier l\'ID du produit.');
+        } else {
+          setProduct(productData);
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération du produit :', error);
 
