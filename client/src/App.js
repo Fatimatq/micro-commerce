@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ProductDetail from './pages/ProductDetail';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
       <Routes>
         <Route path="" element={<HomePage />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route path="/command/:orderId" element={<OrderDetails />} />
+
       </Routes>
       <Footer />
     </Router>
