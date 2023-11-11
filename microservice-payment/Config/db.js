@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require('cors');
 
 // Connexion à la base de données
 mongoose.connect("mongodb://127.0.0.1:27017/microservice-payment", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-
+app.use(cors());
 const db = mongoose.connection;
 
 // Gestion des événements de la connexion à la base de données

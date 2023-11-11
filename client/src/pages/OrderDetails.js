@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import OrderService from '../services/OrderService';
+import ProductService from '../services/ProductService';
 import PaiementService from '../services/PaiementService';
 
 function OrderDetails() {
   const { orderId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPaymentMode, setIsPaymentMode] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
+  const [montant, setMontant] = useState(0);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         const orderData = await OrderService.getOrderById(orderId);
         setOrderDetails(orderData);
+
+        // Récupérer les détails du produit associé à la commande
+        const productData = await ProductService.getProduct(orderData.productId);
+        setProductDetails(productData);
+
+        // Calculer le montant en utilisant le prix du produit
+        setMontant(orderData.quantity * productData.price);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -31,21 +42,28 @@ function OrderDetails() {
   };
 
   const handleValidationClick = async () => {
+    setIsPaymentMode(false);
     try {
       const paymentData = {
         idCommande: orderId,
-        cardNumber: cardNumber,
-        // Add other payment data as needed
+        montant: montant,
+        numeroCarte: cardNumber,
       };
 
       const paymentResponse = await PaiementService.makePayment(paymentData);
       console.log('Payment successful:', paymentResponse);
 
-      // Add any logic you need after a successful payment, such as redirecting or updating state
+      // Définir le message de succès
+      setSuccessMessage('Payment successful!');
+
+      // Réinitialiser le message après 5 secondes
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
 
     } catch (error) {
       console.error('Error making payment:', error.message);
-      // Handle the error, show a message to the user, etc.
+      // Gérer l'erreur, afficher un message à l'utilisateur, etc.
     }
   };
 
@@ -57,11 +75,19 @@ function OrderDetails() {
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">Error: {error}</p>}
 
-        {orderDetails ? (
+        {orderDetails && productDetails ? (
           <div>
             <p className="text-gray-800">Product ID: {orderDetails.productId}</p>
             <p className="text-gray-800">Order Date: {orderDetails.orderDate}</p>
             <p className="text-gray-800">Quantity: {orderDetails.quantity}</p>
+            <p className="text-gray-800">Price per unit: ${productDetails.price}</p>
+            <p className="text-gray-800">Montant: ${montant}</p>
+
+            {successMessage && (
+              <div className="text-green-500 mt-2">
+                {successMessage}
+              </div>
+            )}
 
             {isPaymentMode ? (
               <div>
