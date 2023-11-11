@@ -1,28 +1,32 @@
 import React from 'react';
 import logo from '../assets/images/Logo2.png';
-import {AiOutlineUser} from 'react-icons/ai';
-import { IoMdArrowDropdown } from 'react-icons/io';
-import {FaHistory} from 'react-icons/fa';
-import {MdNotificationsActive} from 'react-icons/md';
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   const menuItems = [
-    { icon: <FaHistory />, title: 'History' },
-    { icon: <MdNotificationsActive />, title: 'Notification' },
-    { icon: <AiOutlineUser />, title: 'Me', hasDropdown: true }, 
+    { title: 'Products', link: '/' },
+    { title: 'Register', link: '/register' },
+    { title: 'Login', link: '/login' },
   ];
 
   return (
     <div className='bg-[#04003F] text-[#D9D9D9] py-4'>
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <img src={logo} alt="SkillSail Logo" className="h-12 w-auto mr-2" /> 
+          <Link to="/">
+            <img src={logo} alt="SkillSail Logo" className="h-16 w-auto mr-2" />
+          </Link>
         </div>
         <ul className="flex space-x-4 font-semibold text-base">
           {menuItems.map((item, index) => (
             <li key={index} className="p-4 flex items-center">
-              {item.icon}
-              <span className="ml-2">{item.title}</span>
-              {item.hasDropdown && <IoMdArrowDropdown  className="ml-1" />} 
+              {item.link ? (
+                <Link to={item.link} className="ml-2">
+                  {item.title}
+                </Link>
+              ) : (
+                <span className="ml-2">{item.title}</span>
+              )}
             </li>
           ))}
         </ul>
