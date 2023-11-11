@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import ProductService from '../services/ProductService';
 import OrderButton from '../components/OrderButton';
@@ -44,20 +45,25 @@ const ProductDetail = () => {
     setQuantity(newQuantity);
   };
 
+  const navigate = useNavigate();
+
   const handleOrderButtonClick = async () => {
     if (productId && quantity > 0) {
       try {
-        const orderId = await OrderService.placeOrder(
+        const response = await OrderService.placeOrder(
           productId,
           new Date(), 
           quantity,
           false 
         );
-
+        const orderId = response._id;
         console.log('Order placed with ID:', orderId);
 
         setSuccessMessage('Votre commande a été ajoutée avec succès.');
         setQuantity(0);
+
+        // Redirect to the /command/${orderId} route
+        navigate(`/command/${orderId}`);
 
         // Clear the success message after 5 seconds
         setTimeout(() => {
