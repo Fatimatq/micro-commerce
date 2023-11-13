@@ -13,7 +13,6 @@ const ProductDetail = () => {
   const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
-<<<<<<< HEAD
 
     const fetchProduct = async () => {
       try {
@@ -25,12 +24,6 @@ const ProductDetail = () => {
         } else {
           setProduct(productData);
         }
-=======
-    const fetchProduct = async () => {
-      try {
-        const productData = await ProductService.getProduct(productId);
-        setProduct(productData);
->>>>>>> 64c86a5df737b7f0b9ddc6c51a00b9b5132a66fe
       } catch (error) {
         handleFetchError(error);
       }

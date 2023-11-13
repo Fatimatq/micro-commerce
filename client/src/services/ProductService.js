@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/Products'; 
+const API_BASE_URL = 'http://localhost:5000/Products'; 
 
 const ProductService = {
   getProduct: async (productId) => {
@@ -10,7 +10,7 @@ const ProductService = {
   } catch (error) {
     if (error.response && error.response.status === 404) {
       // Product not found
-      return null; // or throw a custom error, or handle it in a different way
+      return null; 
     }
 
     console.error('Erreur lors de la récupération du produit :', error);
