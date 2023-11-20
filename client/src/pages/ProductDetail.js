@@ -26,20 +26,24 @@ const ProductDetail = () => {
       fetchProduct();
     }
   }, [productId]);
-
   const handleFetchError = (error) => {
     console.error('Erreur lors de la récupération du produit :', error);
-
-    if (error.response && error.response.status === 404) {
-      setError('Produit non trouvé. Veuillez vérifier l\'ID du produit.');
-    } else if (error.isAxiosError && error.response.status === 500) {
-      setError('Erreur serveur. Veuillez réessayer plus tard.');
+  
+    if (error.response && error.response.status) {
+      if (error.response.status === 404) {
+        setError('Produit non trouvé. Veuillez vérifier l\'ID du produit.');
+      } else if (error.isAxiosError && error.response.status === 500) {
+        setError('Erreur serveur. Veuillez réessayer plus tard.');
+      } else {
+        setError('Une erreur s\'est produite lors de la récupération du produit.');
+      }
     } else if (error.message === 'Network Error') {
       setError('Erreur réseau. Veuillez vérifier votre connexion Internet.');
     } else {
       setError('Une erreur s\'est produite lors de la récupération du produit.');
     }
   };
+  
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
