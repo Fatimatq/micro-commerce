@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/Payments'; 
+const API_BASE_URL = 'http://localhost:5002/Payments'; 
 
 const PaiementService = {
   makePayment: async (paymentData) => {

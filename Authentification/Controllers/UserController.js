@@ -95,6 +95,13 @@ const getUser = async (req, res) => {
     handleError(res, 500, "Internal server error");
   }
 };
+const logoutUser = async (req, res) => {
+  try {
+    res.json({ message: "Logout successful" });
+  } catch (error) {
+    // Handle errors
+    handleError(res, 500, "Internal server error");
+  }
+};
 
-
-module.exports = { userRegister, loginUser, getUser };
+module.exports = { userRegister, loginUser, getUser, logoutUser };

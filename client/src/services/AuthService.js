@@ -68,7 +68,14 @@ const AuthService = {
     }
   },
   
+  logout: () => {
+    // Clear the stored token and user ID
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
 
+    // Remove the Authorization header
+    delete axios.defaults.headers.common["Authorization"];
+  },
   setUserToken: (token) => {
     try {
       // Utiliser la fonction pour définir le token dans l'en-tête

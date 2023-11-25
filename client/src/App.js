@@ -7,21 +7,28 @@ import ProductDetail from './pages/ProductDetail';
 import OrderDetails from './pages/OrderDetails';
 import Register from './pages/Register';
 import Login from './pages/Login';
-
+import AuthService from "./services/AuthService";
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isAuthenticated());
+
+  const handleLogout = () => {
+    // Perform logout logic (clear token, redirect, etc.)
+    AuthService.logout();
+    // Update the state to reflect the user being logged out
+    setIsLoggedIn(false);
+  };
 
   const handleLogin = (status) => {
-    setLoggedIn(status);
+    setIsLoggedIn(status);
   };
 
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} onLogout={() => setLoggedIn(false)} />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
       <Routes>
         <Route path="" element={<HomePage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/command/:orderId" element={<OrderDetails />} />
       </Routes>

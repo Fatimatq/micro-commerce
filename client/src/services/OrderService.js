@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/Orders'; 
+const API_BASE_URL = 'http://localhost:5001/Orders'; 
 
 const OrderService = {
   placeOrder: async (productId, orderDate, quantity, orderPay ) => {

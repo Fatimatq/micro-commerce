@@ -1,10 +1,10 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-paiement
   namespace: mcommerce
 spec:
-  replicas: 2 
+  replicas: 2
   selector:
     matchLabels:
       app: ms-paiement
@@ -27,6 +27,7 @@ spec:
                   key: mcommerce-database
             - name: MONGO_SERVICE
               value: mcommerce-mongodb-service
+
 ---
 apiVersion: v1
 kind: Service

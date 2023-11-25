@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ProductService from '../services/ProductService';
 import OrderButton from '../components/OrderButton';
 import OrderService from '../services/OrderService';
-
+import AuthService from '../services/AuthService';
 const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -59,35 +59,40 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   const handleOrderButtonClick = async () => {
-    if (productId && quantity > 0) {
-      try {
-        const response = await OrderService.placeOrder(
-          productId,
-          new Date(), 
-          quantity,
-          false 
-        );
-        const orderId = response._id;
-        console.log('Order placed with ID:', orderId);
+    // Check if the user is authenticated
+    if (AuthService.isAuthenticated()) {
+      if (productId && quantity > 0) {
+        try {
+          const response = await OrderService.placeOrder(
+            productId,
+            new Date(),
+            quantity,
+            false
+          );
+          const orderId = response._id;
+          console.log('Order placed with ID:', orderId);
 
-        setSuccessMessage('Votre commande a été ajoutée avec succès.');
-        setQuantity(0);
+          setSuccessMessage('Votre commande a été ajoutée avec succès.');
+          setQuantity(0);
 
-        // Redirect to the /command/${orderId} route
-        navigate(`/command/${orderId}`);
+          // Redirect to the /command/${orderId} route
+          navigate(`/command/${orderId}`);
 
-        // Clear the success message after 5 seconds
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 5000);
-      } catch (error) {
-        console.error(error.message);
+          // Clear the success message after 5 seconds
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+        } catch (error) {
+          console.error(error.message);
+        }
+      } else {
+        console.error('Invalid productId or quantity. Cannot place the order.');
       }
     } else {
-      console.error('Invalid productId or quantity. Cannot place the order.');
+      // Redirect to login page if the user is not authenticated
+      navigate('/login');
     }
   };
-
   return (
     <div className="container mx-auto my-8">
       <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">Détails du produit</h2>
