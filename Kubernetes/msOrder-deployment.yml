@@ -1,0 +1,43 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: ms-order
+  namespace: mcommerce
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: ms-order
+  template:
+    metadata:
+      labels:
+        app: ms-order
+    spec:
+      containers:
+        - name: ms-order
+          image: khaoula1el/backend-order
+          ports:
+            - containerPort: 5001
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-order-service
+  namespace: mcommerce
+spec:
+  selector:
+    app: ms-order
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: LoadBalancer

@@ -1,39 +1,54 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
 const Login = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      // Call the login function from AuthService
-      const accessToken = await AuthService.login({
-        email: email,
-        password: password,
-      });
+      setIsLoading(true);
+      setError(""); // Clear previous errors
+      console.log("Credentials:", credentials);
 
-      // Set the JWT token in the browser's localStorage or cookies as needed
-      // Here, I'm storing it in localStorage. You can adjust based on your needs.
-      localStorage.setItem("accessToken", accessToken);
+      // Now the login function automatically sets the token in the header
+      const { accessToken, userId } = await AuthService.login(credentials);
 
-      // Call onLogin function with true to update isLoggedIn state in App component
-      onLogin(true);
+      // Pass the user ID to onLogin
+      onLogin(true, userId);
 
-      // Navigate to the home page on successful login
+      // Pass the user ID to getUser
+      const user = await AuthService.getUser(userId);
+
       navigate("/");
     } catch (error) {
-      if (error.status === 401) {
-        alert("Incorrect Email or password!");
+      console.error("Login Error:", error);
+      if (error.response?.status === 401) {
+        setError("Incorrect email or password!");
       } else {
-        alert(error.message);
+        setError(error.message || "An error occurred");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-teal-400 via-teal-300 to-blue-500">
       {/* Left Section */}
@@ -52,43 +67,45 @@ const Login = ({ onLogin }) => {
       {/* Right Section */}
       <div className="w-full md:w-1/2 bg-white p-8 flex flex-col items-center justify-center">
         <h5 className="text-5xl mb-4">Login</h5>
-        <form onSubmit={handleSubmit}>
-          <div className="mt-6 w-full max-w-md">
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-teal-400"
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full mt-4 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-teal-400"
-            />
-          </div>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="mt-6 w-full max-w-md">
+          {/* Email Input */}
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={credentials.email}
+            onChange={handleChange}
+            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-teal-400"
+          />
 
-          <br />
-          <br />
+          {/* Password Input */}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={credentials.password}
+            onChange={handleChange}
+            className="w-full mt-4 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-teal-400"
+          />
 
-          <br />
+          {/* Sign Up Link */}
           <p className="text-lg">
-          Don't have an account?{" "}
-          <Link to={"/register"} className="text-blue-500 hover:underline">
-            Create your account
-          </Link>{" "}
+            Don't have an account?{" "}
+            <Link to="/register" className="text-blue-500 hover:underline">
+              Create your account
+            </Link>
           </p>
-            <button
-                type="submit"
-                className="mt-8 mx-auto bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold py-2 px-4 rounded-full focus:outline-none hover:shadow-md"
-            >
-                Login
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="mt-8 mx-auto bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold py-2 px-4 rounded-full focus:outline-none hover:shadow-md"
+            disabled={isLoading} // Disable the button when loading
+          >
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
-        
       </div>
     </div>
   );

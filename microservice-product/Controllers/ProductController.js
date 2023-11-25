@@ -11,9 +11,6 @@ router.get("/products", async (req, res) => {
         res.status(500).send("Erreur lors de la récupération des produits.");
     }
 });
-
-
-
 router.get("/products/:productId", async (req, res) => {
     try {
         const productId = req.params.productId;

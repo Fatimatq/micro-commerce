@@ -1,0 +1,46 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: ms-product
+  namespace: mcommerce
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: ms-product
+  template:
+    metadata:
+      labels:
+        app: ms-product
+    spec:
+      containers:
+        - name: ms-product
+          image: khaoula1el/backend-product:app
+          ports:
+            - containerPort: 5000
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+      imagePullSecrets:
+        - name: gitlab-registry-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-product-service
+  namespace: mcommerce
+spec:
+  selector:
+    app: ms-product
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
