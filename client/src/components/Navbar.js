@@ -2,12 +2,14 @@ import React from 'react';
 import logo from '../assets/images/Logo2.png';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  const menuItems = [
-    { title: 'Products', link: '/' },
-    { title: 'Register', link: '/register' },
-    { title: 'Login', link: '/login' },
-  ];
+const Navbar = ({ isLoggedIn, onLogout }) => {
+  const menuItems = isLoggedIn
+    ? [{ title: 'Products', link: '/' }, { title: 'Logout', onClick: onLogout }]
+    : [
+        { title: 'Products', link: '/' },
+        { title: 'Register', link: '/register' },
+        { title: 'Login', link: '/login' },
+      ];
 
   return (
     <div className='bg-[#04003F] text-[#D9D9D9] py-4'>
@@ -25,7 +27,9 @@ const Navbar = () => {
                   {item.title}
                 </Link>
               ) : (
-                <span className="ml-2">{item.title}</span>
+                <span className="ml-2" onClick={item.onClick}>
+                  {item.title}
+                </span>
               )}
             </li>
           ))}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/Payments'; 
+const API_GATEWAY_URL = "http://localhost:3001";
+const API_BASE_URL = `${API_GATEWAY_URL}/Payments`;
 
 const PaiementService = {
   makePayment: async (paymentData) => {
