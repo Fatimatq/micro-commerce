@@ -27,9 +27,6 @@ spec:
                   key: mcommerce-database
             - name: MONGO_SERVICE
               value: mcommerce-mongodb-service
-      imagePullSecrets:
-        - name: gitlab-registry-secret
-
 ---
 apiVersion: v1
 kind: Service

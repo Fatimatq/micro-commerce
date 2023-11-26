@@ -3,11 +3,15 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require('cors');
 
-// Connexion à la base de données
 mongoose.connect("mongodb://127.0.0.1:27017/microservice-payment", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+// mongoose.connect("mongodb://mcommerce-mongodb-service:27017/mcommerce-payment" || 'mongodb://127.0.0.1:27017/mcommerce-payment', {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//         });
+
 app.use(cors());
 const db = mongoose.connection;
 

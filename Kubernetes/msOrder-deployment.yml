@@ -4,7 +4,7 @@ metadata:
   name: ms-order
   namespace: mcommerce
 spec:
-  replicas: 2 
+  replicas: 2
   selector:
     matchLabels:
       app: ms-order
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ms-order
-          image: khaoula1el/backend-order
+          image: khaoula1el/backend-order:app
           ports:
             - containerPort: 5001
           resources: {}
@@ -27,6 +27,7 @@ spec:
                   key: mcommerce-database
             - name: MONGO_SERVICE
               value: mcommerce-mongodb-service
+
 ---
 apiVersion: v1
 kind: Service
