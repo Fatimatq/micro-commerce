@@ -59,10 +59,15 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   const handleOrderButtonClick = async () => {
-    // Check if the user is authenticated
-    if (AuthService.isAuthenticated()) {
-      if (productId && quantity > 0) {
-        try {
+    try {
+      // Check if the user is authenticated
+      const isAuthenticated = await AuthService.isAuthenticated();
+      console.log('Is authenticated:', isAuthenticated);
+  
+      if (isAuthenticated) {
+        // Check productId and quantity
+        if (productId && quantity > 0) {
+          // Place the order
           const response = await OrderService.placeOrder(
             productId,
             new Date(),
@@ -71,28 +76,32 @@ const ProductDetail = () => {
           );
           const orderId = response._id;
           console.log('Order placed with ID:', orderId);
-
+  
+          // Display success message
           setSuccessMessage('Votre commande a été ajoutée avec succès.');
           setQuantity(0);
-
+  
           // Redirect to the /command/${orderId} route
           navigate(`/command/${orderId}`);
-
+  
           // Clear the success message after 5 seconds
           setTimeout(() => {
             setSuccessMessage(null);
           }, 5000);
-        } catch (error) {
-          console.error(error.message);
+        } else {
+          console.error('Invalid productId or quantity. Cannot place the order.');
         }
       } else {
-        console.error('Invalid productId or quantity. Cannot place the order.');
+        // Redirect to login page if the user is not authenticated
+        console.log('Redirecting to login...');
+        navigate('/login');
       }
-    } else {
-      // Redirect to login page if the user is not authenticated
-      navigate('/login');
+    } catch (error) {
+      console.error('Error during order placement:', error.message);
     }
   };
+  
+  
   return (
     <div className="container mx-auto my-8">
       <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">Détails du produit</h2>

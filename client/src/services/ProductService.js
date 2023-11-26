@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/Products'; 
+const API_GATEWAY_URL = "http://localhost:3001";
+const API_BASE_URL = `${API_GATEWAY_URL}/Products`;
 
 const ProductService = {
   getProduct: async (productId) => {
   try {
+    console.log('URL de la requête getProduct :', `${API_BASE_URL}/${productId}`);
     const response = await axios.get(`${API_BASE_URL}/${productId}`);
     return response.data;
   } catch (error) {

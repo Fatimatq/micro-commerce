@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5004/users";
+const API_GATEWAY_URL = "http://localhost:3001";
+const API_BASE_URL = `${API_GATEWAY_URL}/users`;
 
 const setAuthorizationHeader = (token) => {
   if (!token || typeof token !== 'string') {
