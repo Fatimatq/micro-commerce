@@ -1,21 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-order
+  name: ms-order-v1
   namespace: mcommerce
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: ms-order
+      version: v1
   template:
     metadata:
       labels:
         app: ms-order
+        version: v1
     spec:
       containers:
-        - name: ms-order
-          image: khaoula1el/backend-order:app
+        - name: ms-order-v1
+          image: khaoula1el/backend-order:v1
+          ports:
+            - containerPort: 5001
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-order-v2
+  namespace: mcommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-order
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: ms-order
+        version: v2
+    spec:
+      containers:
+        - name: ms-order-v2
+          image: khaoula1el/backend-order:v2
           ports:
             - containerPort: 5001
           resources: {}

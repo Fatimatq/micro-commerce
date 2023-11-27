@@ -1,21 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: frontend-deployment-v1
   namespace: mcommerce
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: frontend
+      version: v1
   template:
     metadata:
       labels:
         app: frontend
+        version: v1
     spec:
       containers:
-        - name: frontend-container
-          image: khaoula1el/frontend:app
+        - name: frontend-container-v1
+          image: khaoula1el/frontend:v1
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment-v2
+  namespace: mcommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v2
+    spec:
+      containers:
+        - name: frontend-container-v2
+          image: khaoula1el/frontend:v2
           ports:
             - containerPort: 3000
 ---

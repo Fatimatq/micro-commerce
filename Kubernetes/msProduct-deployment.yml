@@ -1,21 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-product
+  name: ms-product-v1
   namespace: mcommerce
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: ms-product
+      version: v1
   template:
     metadata:
       labels:
         app: ms-product
+        version: v1
     spec:
       containers:
-        - name: ms-product
-          image: khaoula1el/backend-product:app
+        - name: ms-product-v1
+          image: khaoula1el/backend-product:v1
+          ports:
+            - containerPort: 5000
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-product-v2
+  namespace: mcommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-product
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: ms-product
+        version: v2
+    spec:
+      containers:
+        - name: ms-product-v2
+          image: khaoula1el/backend-product:v2
           ports:
             - containerPort: 5000
           resources: {}

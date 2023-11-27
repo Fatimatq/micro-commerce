@@ -1,21 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-paiement
+  name: ms-paiement-v1
   namespace: mcommerce
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: ms-paiement
+      version: v1
   template:
     metadata:
       labels:
         app: ms-paiement
+        version: v1
     spec:
       containers:
         - name: ms-paiement
-          image: khaoula1el/backend-paiement:app
+          image: khaoula1el/backend-paiement:v1
+          ports:
+            - containerPort: 5002
+          resources: {}
+          env:
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mcommerce-secret
+                  key: mcommerce-database
+            - name: MONGO_SERVICE
+              value: mcommerce-mongodb-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-paiement-v2
+  namespace: mcommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-paiement
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: ms-paiement
+        version: v2
+    spec:
+      containers:
+        - name: ms-paiement
+          image: khaoula1el/backend-paiement:v2
           ports:
             - containerPort: 5002
           resources: {}
